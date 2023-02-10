@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import Square3Stack3DIcon from '@heroicons/react/24/outline/Square3Stack3DIcon';
 import AuthLayout from '~/components/auth/AuthLayout';
+import LoginForm from '~/components/auth/LoginForm';
 
 export default function SignInPage() {
   return (
@@ -14,7 +15,7 @@ export default function SignInPage() {
             Enter your email to sign in to your account
           </p>
         </div>
-        Fom
+        <LoginForm />
         <p className="footer">
           <Link href="/auth/signup">Don&apos;t have an account? Sign Up</Link>
         </p>

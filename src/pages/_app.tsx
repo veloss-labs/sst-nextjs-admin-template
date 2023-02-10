@@ -33,7 +33,16 @@ export default function App({
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page);
   return (
-    <ConfigProvider locale={koKR}>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#111111',
+          colorLink: '#c4c4c4',
+          colorLinkHover: '#e7e7e7',
+        },
+      }}
+      locale={koKR}
+    >
       <Provider
         pageProps={pageProps}
         isLoggedIn={isLoggedIn}
