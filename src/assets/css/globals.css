@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./_spinner.css";
+@import "./_custom_antd.css";
+@import "./common/_common.css";
+@import "./pages/_auth.css";
