@@ -1,5 +1,5 @@
 export type RouteOptions = {
-    id: 
+  id: string;
 };
 
 export type RootRouteOptions = {} & RouteOptions;
