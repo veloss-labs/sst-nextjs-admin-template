@@ -6,15 +6,15 @@ import { Input, Button, Form } from 'antd';
 // form
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, type LoginFormData } from '~/libs/form/auth';
+import { signupSchema, type SignupFormData } from '~/libs/form/auth';
 
-export default function LoginForm() {
+export default function SignupForm() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
   });
 
   const control_email = useController({
@@ -22,12 +22,22 @@ export default function LoginForm() {
     name: 'email',
   });
 
+  const control_nickname = useController({
+    control,
+    name: 'nickname',
+  });
+
   const control_password = useController({
     control,
     name: 'password',
   });
 
-  const onSubmit = useCallback((data: LoginFormData) => {
+  const control_passwordConfirm = useController({
+    control,
+    name: 'passwordConfirm',
+  });
+
+  const onSubmit = useCallback((data: SignupFormData) => {
     console.log(data);
   }, []);
 
@@ -36,6 +46,22 @@ export default function LoginForm() {
       <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
+            <Form.Item
+              label="닉네임"
+              name="nickname"
+              validateStatus={errors.nickname?.message ? 'error' : undefined}
+              help={
+                errors.nickname?.message ? errors.nickname?.message : undefined
+              }
+            >
+              <Input
+                type="text"
+                autoComplete="nickname"
+                autoCorrect="off"
+                placeholder="닉네임"
+                {...control_nickname.field}
+              />
+            </Form.Item>
             <Form.Item
               label="이메일"
               name="email"
@@ -65,9 +91,28 @@ export default function LoginForm() {
                 {...control_password.field}
               />
             </Form.Item>
+            <Form.Item
+              label="비밀번호 확인"
+              name="passwordConfirm"
+              validateStatus={
+                errors.passwordConfirm?.message ? 'error' : undefined
+              }
+              help={
+                errors.passwordConfirm?.message
+                  ? errors.passwordConfirm?.message
+                  : undefined
+              }
+            >
+              <Input.Password
+                autoComplete="password"
+                autoCorrect="off"
+                placeholder="비밀번호 확인"
+                {...control_passwordConfirm.field}
+              />
+            </Form.Item>
           </div>
           <Button htmlType="submit" type="primary">
-            로그인
+            회원가입
           </Button>
         </div>
       </Form>
