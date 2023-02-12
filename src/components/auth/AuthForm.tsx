@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Square3Stack3DIcon from '@heroicons/react/24/outline/Square3Stack3DIcon';
+import LogoIcon from '~/components/shared/icons/Logo';
 
 interface AuthFormProps {
   title: string;
@@ -13,7 +13,7 @@ function AuthForm({ title, description, isSignup, children }: AuthFormProps) {
   return (
     <div className="auth-form">
       <div>
-        <Square3Stack3DIcon className="mx-auto h-6 w-6" />
+        <LogoIcon className="mx-auto h-6 w-6" />
         <h1 className="title">{title}</h1>
         <p className="description">{description}</p>
       </div>

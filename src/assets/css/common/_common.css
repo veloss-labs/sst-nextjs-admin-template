@@ -1,3 +1,16 @@
 .icon--sm {
   @apply h-4 w-4;
 }
+
+.link-with-icon {
+  @apply inline-flex items-center gap-1;
+}
+
+.link-with-icon.sidebar-profile:hover {
+  @apply bg-transparent;
+}
+
+.sidebar {
+  @apply fixed top-0 left-0 bottom-0 p-5 bg-gray-100 overflow-hidden;
+  box-shadow: inset -7px 0 9px -7px rgb(0 0 0 / 0.1);
+}

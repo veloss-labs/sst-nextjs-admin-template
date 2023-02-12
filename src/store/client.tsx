@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultSeo from '~/components/shared/Seo/DefaultSeo';
+import DefaultSeo from '~/components/shared/seo/DefaultSeo';
 import AuthProvider, { type AuthStore } from './useAuthStore';
 import RouteProvider, { type RouteStore } from './useRouteStore';
 import LayoutProvider, { type LayoutStore } from './useLayoutStore';
