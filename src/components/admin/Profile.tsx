@@ -1,19 +1,18 @@
-import { Dropdown, MenuProps } from 'antd';
-import ChevronDownIcon from '@heroicons/react/24/outline/ChevronDownIcon';
+import React from 'react';
+import { Dropdown, MenuProps, Typography, Button } from 'antd';
 import UserIcon from '@heroicons/react/24/outline/UserIcon';
 import LogOutIcon from '@heroicons/react/24/outline/ArrowRightOnRectangleIcon';
-import React, { useCallback } from 'react';
-import { Typography, Button } from 'antd';
+import ChevronDownIcon from '@heroicons/react/24/outline/ChevronDownIcon';
 
-const Profile = () => {
+function Profile() {
   const items: MenuProps['items'] = [
     {
       label: (
         <Button
-          type="text"
-          icon={<UserIcon width={16} height={16} />}
+          type="link"
+          icon={<UserIcon />}
           size="small"
-          className="min-w-[8rem] link-with-icon sidebar-profile"
+          className="sm:min-w-[8rem] btn-menu--profile"
         >
           내 프로필
         </Button>
@@ -23,10 +22,10 @@ const Profile = () => {
     {
       label: (
         <Button
-          type="text"
-          icon={<LogOutIcon width={16} height={16} />}
+          type="link"
+          icon={<LogOutIcon />}
           size="small"
-          className="link-with-icon sidebar-profile"
+          className="btn-menu--profile"
         >
           로그아웃
         </Button>
@@ -44,14 +43,16 @@ const Profile = () => {
         <Button
           size="small"
           htmlType="button"
-          className="flex items-center px-2 text-gray-600 rounded hover:bg-gray-200 enable-transition"
+          shape="default"
+          type="text"
+          className="btn-menu--toggle"
         >
           <span className="sm:max-w-[10rem] ellipsis-text">admin</span>
-          <ChevronDownIcon className="w-5 h-5" />
+          <ChevronDownIcon className="h-4 w-4" />
         </Button>
       </Dropdown>
     </>
   );
-};
+}
 
 export default React.memo(Profile);

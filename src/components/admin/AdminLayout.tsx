@@ -1,29 +1,54 @@
-import React, { useState } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
-import Sidebar from './Sidebar';
+import React, { useCallback } from 'react';
 
-const { Header, Sider, Content } = Layout;
+// components
+import { Avatar, Button, Typography } from 'antd';
+import Sidebar from '~/components/admin/Sidebar';
+import MobileMenu from '~/components/admin/MobileMenu';
+import Bars3Icon from '@heroicons/react/24/outline/Bars3Icon';
+
+// hooks
+import { useLayoutContext } from '~/store/useLayoutStore';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
 function AdminLayout({ children }: AdminLayoutProps) {
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const { togglePopupMenu } = useLayoutContext((state) => state);
+
+  const onTogglePopupMenu = useCallback(() => {
+    togglePopupMenu();
+  }, [togglePopupMenu]);
 
   return (
     <div>
-      <Sidebar isShowSidebar={true} hideSidebar={() => {}} />
+      <Sidebar />
+      <div className="mobile-header">
+        <div className="flex items-center">
+          <Avatar
+            shape="square"
+            size={36}
+            style={{ backgroundColor: '#1abc9c' }}
+          >
+            P
+          </Avatar>
+          <Typography.Title className="!mb-0 !mt-0 ml-3" level={4}>
+            Admin UI
+          </Typography.Title>
+        </div>
+        <div>
+          <Button
+            type="text"
+            className="!flex items-center justify-center"
+            htmlType="button"
+            onClick={onTogglePopupMenu}
+          >
+            <Bars3Icon className="w-8 h-8" />
+          </Button>
+        </div>
+      </div>
+      <MobileMenu />
+      <div className="sm:h-full sm:overflow-auto sm:ml-72">{children}</div>
     </div>
   );
 }

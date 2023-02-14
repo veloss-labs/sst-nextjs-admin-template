@@ -8,15 +8,15 @@ interface AuthLayoutProps {
 
 function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <div className="auth-layout">
-      <div className="auth-container">
-        <Link href="/" className="btn-link--back">
-          <ArrowLeftIcon className="mr-2 icon--sm" />
-          Back
-        </Link>
-        {children}
+    <>
+      <Link href="/" className="btn-link--back">
+        <ArrowLeftIcon className="mr-2 icon--sm" />
+        Back
+      </Link>
+      <div className="auth-layout">
+        <div className="auth-container">{children}</div>
       </div>
-    </div>
+    </>
   );
 }
 

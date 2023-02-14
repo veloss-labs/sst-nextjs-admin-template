@@ -2,15 +2,43 @@
   @apply h-4 w-4;
 }
 
-.link-with-icon {
-  @apply inline-flex items-center gap-1;
+/* Button */
+
+.btn-link--back {
+  @apply absolute top-4 left-4 inline-flex items-center justify-center rounded-lg border border-transparent bg-transparent py-2 px-3 text-center text-sm  font-medium text-slate-900 hover:border-slate-200 hover:bg-slate-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-slate-200 md:top-8 md:left-8;
 }
 
-.link-with-icon.sidebar-profile:hover {
-  @apply bg-transparent;
+.btn-menu--toggle {
+  @apply !flex items-center justify-center gap-2;
 }
+
+.btn-menu--profile {
+  @apply !flex items-center gap-2;
+}
+
+.ant-btn.btn-menu--profile svg {
+  @apply w-4 h-4;
+}
+
+/* Button */
+
+/* mobile header */
+
+.mobile-header {
+  @apply z-40 flex items-center justify-between px-5 h-14 sm:hidden border-solid border-0 border-b border-b-brand-300;
+}
+
+/* mobile header */
+
+/* Sidebar */
 
 .sidebar {
   @apply fixed top-0 left-0 bottom-0 p-5 bg-gray-100 overflow-hidden;
   box-shadow: inset -7px 0 9px -7px rgb(0 0 0 / 0.1);
 }
+
+.sidebar .routes-menu {
+  @apply !bg-transparent !border-none;
+}
+
+/* Sidebar */

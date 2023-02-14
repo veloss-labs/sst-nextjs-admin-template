@@ -2,31 +2,24 @@ import React from 'react';
 import { createContext, useContext, useRef } from 'react';
 import { useStore, createStore, StoreApi } from 'zustand';
 
-export const NAV_TYPE_SIDE = 'SIDE';
-export const NAV_TYPE_TOP = 'TOP';
-export const ROW_GUTTER = 16;
-export const SIDE_NAV_WIDTH = 250;
-export const SIDE_NAV_COLLAPSED_WIDTH = 80;
-
-export type NavType = typeof NAV_TYPE_SIDE | typeof NAV_TYPE_TOP;
-
 interface LayoutSchema {
-  navCollapsed: boolean;
-  mobileNav: boolean;
-  navType: NavType;
+  isShowSidebar: boolean;
+  isShowPopupMenu: boolean;
 }
 
 export interface LayoutStore extends LayoutSchema {
-  toggleNavCollapsed: (navCollapsed: boolean) => void;
-  toggleMobileNav: (mobileNav: boolean) => void;
-  navTypeChange: (navType: NavType) => void;
+  closeSidebar: () => void;
+  closePopupMenu: () => void;
+  openSidebar: () => void;
+  openPopupMenu: () => void;
+  toggleSidebar: () => void;
+  togglePopupMenu: () => void;
 }
 
 const getDefaultInitialState = () =>
   ({
-    navCollapsed: false,
-    mobileNav: false,
-    navType: NAV_TYPE_SIDE,
+    isShowSidebar: true,
+    isShowPopupMenu: false,
   } as LayoutSchema);
 
 const LayoutContext = createContext<StoreApi<LayoutStore> | null>(null);
@@ -35,9 +28,14 @@ const createLayoutStore = (initProps?: Partial<LayoutSchema>) => {
   return createStore<LayoutStore>()((set) => ({
     ...getDefaultInitialState(),
     ...initProps,
-    toggleNavCollapsed: (navCollapsed: boolean) => set({ navCollapsed }),
-    toggleMobileNav: (mobileNav: boolean) => set({ mobileNav }),
-    navTypeChange: (navType: NavType) => set({ navType }),
+    closeSidebar: () => set({ isShowSidebar: false }),
+    closePopupMenu: () => set({ isShowPopupMenu: false }),
+    openSidebar: () => set({ isShowSidebar: true }),
+    openPopupMenu: () => set({ isShowPopupMenu: true }),
+    toggleSidebar: () =>
+      set((state) => ({ isShowSidebar: !state.isShowSidebar })),
+    togglePopupMenu: () =>
+      set((state) => ({ isShowPopupMenu: !state.isShowPopupMenu })),
   }));
 };
 
@@ -58,10 +56,10 @@ export default function LayoutProvider({ children, ...otherProps }: Props) {
   );
 }
 
-export function useLayoutContext<T>(
-  selector: (state: LayoutStore) => T,
-  equalityFn?: (left: T, right: T) => boolean,
-): T {
+export function useLayoutContext(
+  selector: (state: LayoutStore) => LayoutStore,
+  equalityFn?: (left: LayoutStore, right: LayoutStore) => boolean,
+): LayoutStore {
   const store = useContext(LayoutContext);
   if (!store) {
     const error = new Error(

@@ -40,7 +40,7 @@ export default class DocumentPage extends Document {
 
   render() {
     return (
-      <Html lang="ko">
+      <Html lang="ko" dir="ltr">
         <Head />
         <body>
           <Main />
