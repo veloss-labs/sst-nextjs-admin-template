@@ -12,5 +12,9 @@
 }
 
 .ant-spin.page-loading {
-  @apply flex flex-col justify-center items-center absolute top-0 left-0 right-0 w-full h-full bg-opacity-40 bg-brand-400
+  @apply flex flex-col justify-center items-center absolute top-0 left-0 right-0 w-full h-full bg-opacity-40 bg-brand-400;
+}
+
+.search-form .ant-card-body {
+  @apply bg-gray-100;
 }
