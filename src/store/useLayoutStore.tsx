@@ -56,10 +56,10 @@ export default function LayoutProvider({ children, ...otherProps }: Props) {
   );
 }
 
-export function useLayoutContext(
-  selector: (state: LayoutStore) => LayoutStore,
-  equalityFn?: (left: LayoutStore, right: LayoutStore) => boolean,
-): LayoutStore {
+export function useLayoutContext<T>(
+  selector: (state: LayoutStore) => T,
+  equalityFn?: (left: T, right: T) => boolean,
+): T {
   const store = useContext(LayoutContext);
   if (!store) {
     const error = new Error(

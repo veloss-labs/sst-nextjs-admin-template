@@ -7,13 +7,20 @@ import { Inter } from '@next/font/google';
 
 import Provider from '~/store/provider';
 
+import { _COLOR } from '~/libs/styles/color';
+import { getRoutes } from '~/libs/router/api/routes';
+
 // types
 import type { NextPage } from 'next';
 import type { AppContext, AppProps } from 'next/app';
-import { _COLOR } from '~/libs/styles/color';
+import type { AuthoritiesSchema } from '~/libs/router/ts/route';
+import type { Nullable } from '~/ts/common';
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: React.ReactElement) => React.ReactNode;
+  getLayout?: (
+    page: React.ReactElement,
+    pageHeader?: Nullable<React.ReactNode>,
+  ) => React.ReactNode;
 };
 
 interface AppPropsWithLayout
@@ -21,6 +28,7 @@ interface AppPropsWithLayout
     Pick<NextPage, 'getInitialProps'> {
   Component: NextPageWithLayout;
   isLoggedIn: boolean;
+  originRoutes: AuthoritiesSchema[];
   currentProfile?: any;
 }
 
@@ -30,6 +38,7 @@ export default function App({
   Component,
   pageProps,
   isLoggedIn,
+  originRoutes,
   currentProfile,
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page);
@@ -52,6 +61,7 @@ export default function App({
         pageProps={pageProps}
         isLoggedIn={isLoggedIn}
         currentProfile={currentProfile}
+        originRoutes={originRoutes}
       >
         {getLayout(<Component {...pageProps} />)}
       </Provider>
@@ -71,11 +81,14 @@ App.getInitialProps = async ({ Component, ctx }: AppContext) => {
     pageProps = await Component.getInitialProps(ctx);
   }
 
+  const { data: originRoutes } = await getRoutes();
+
   // _app에서 props 추가 (모든 컴포넌트에서 공통적으로 사용할 값 추가)
   pageProps = { ...pageProps };
 
   return {
     pageProps,
+    originRoutes,
     isLoggedIn: false,
     currentProfile: null,
   };

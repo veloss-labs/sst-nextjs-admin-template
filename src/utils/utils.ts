@@ -9,7 +9,8 @@ type GetUrlParams = {
   nextApiRoutes?: boolean;
 };
 
-export const getUrl = ({ ctx, nextApiRoutes }: GetUrlParams) => {
+export const getUrl = (params?: GetUrlParams) => {
+  const { ctx, nextApiRoutes } = params || {};
   const _NEXT_API_ROUTES_PATHNAME = '/api';
   const _NEXT_COMMON_PATHNAME = '/';
   const baseUrl = nextApiRoutes

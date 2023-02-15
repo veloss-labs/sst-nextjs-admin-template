@@ -1,4 +1,5 @@
 import React from 'react';
+import { Breadcrumb } from 'antd';
 import AdminLayout from '~/components/admin/AdminLayout';
 
 export default function Home() {
@@ -6,5 +7,18 @@ export default function Home() {
 }
 
 Home.getLayout = function GetLayout(page: React.ReactNode) {
-  return <AdminLayout>{page}</AdminLayout>;
+  return (
+    <AdminLayout
+      pageHeader={
+        <div className="pt-7 px-5 sm:px-10">
+          <Breadcrumb>
+            <Breadcrumb.Item>홈</Breadcrumb.Item>
+            <Breadcrumb.Item>대시보드</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+      }
+    >
+      {page}
+    </AdminLayout>
+  );
 };

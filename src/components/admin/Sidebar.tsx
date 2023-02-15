@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 // components
-import { Avatar, Button, Divider, Layout } from 'antd';
+import { Avatar, Button, Divider, Layout, theme } from 'antd';
 import ChevronLeftIcon from '@heroicons/react/24/outline/ChevronLeftIcon';
 import Bars3Icon from '@heroicons/react/24/outline/Bars3Icon';
 import Profile from '~/components/admin/Profile';
@@ -11,8 +11,19 @@ import RoutesMenu from '~/components/admin/RoutesMenu';
 // hooks
 import { useLayoutContext } from '~/store/useLayoutStore';
 
-function Sidebar() {
-  const { isShowSidebar, toggleSidebar } = useLayoutContext((state) => state);
+import type { UrlRoutes } from '~/ts/common';
+
+interface SidebarProps {
+  pageTransition: (url: UrlRoutes) => Promise<void>;
+}
+
+function Sidebar({ pageTransition }: SidebarProps) {
+  const { isShowSidebar, toggleSidebar } = useLayoutContext((state) => ({
+    isShowSidebar: state.isShowSidebar,
+    toggleSidebar: state.toggleSidebar,
+  }));
+
+  const { token } = theme.useToken();
 
   return (
     <Layout.Sider
@@ -27,7 +38,7 @@ function Sidebar() {
             <Avatar
               shape="square"
               size={46}
-              style={{ backgroundColor: '#1abc9c' }}
+              style={{ backgroundColor: token.colorPrimary }}
             >
               P
             </Avatar>
@@ -40,7 +51,7 @@ function Sidebar() {
           <span className="text-sm">메뉴</span>
         </Divider>
         <div className="overflow-auto grow">
-          <RoutesMenu />
+          <RoutesMenu pageTransition={pageTransition} />
         </div>
         <div>
           <div className="flex justify-end absolute bottom-0 right-0 m-3">

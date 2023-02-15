@@ -1,26 +1,33 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
+// hooks
 import { useLayoutContext } from '~/store/useLayoutStore';
-import { useMedia } from 'react-use';
 
+// components
 import Profile from '~/components/admin/Profile';
 import RoutesMenu from '~/components/admin/RoutesMenu';
 import { Divider } from 'antd';
 
-const MobileMenu = () => {
-  const { isShowPopupMenu, closePopupMenu, openSidebar } = useLayoutContext(
-    (state) => state,
-  );
+import type { UrlRoutes } from '~/ts/common';
 
-  const isMobile = useMedia('(max-width: 640px)', false);
+interface MobileMenuProps {
+  pageTransition: (url: UrlRoutes) => Promise<void>;
+}
+
+function MobileMenu({ pageTransition }: MobileMenuProps) {
+  const { isShowPopupMenu } = useLayoutContext((state) => ({
+    isShowPopupMenu: state.isShowPopupMenu,
+  }));
 
   useEffect(() => {
-    if (isShowPopupMenu && !isMobile) {
-      closePopupMenu();
-      openSidebar();
+    if (isShowPopupMenu) {
+      disableBodyScroll(document.body);
+    } else {
+      enableBodyScroll(document.body);
     }
-  }, [isShowPopupMenu, isMobile]);
+  }, [isShowPopupMenu]);
 
   return (
     <motion.div
@@ -42,9 +49,9 @@ const MobileMenu = () => {
       <Divider orientation="left">
         <span className="text-sm">메뉴</span>
       </Divider>
-      <RoutesMenu />
+      <RoutesMenu pageTransition={pageTransition} />
     </motion.div>
   );
-};
+}
 
 export default MobileMenu;

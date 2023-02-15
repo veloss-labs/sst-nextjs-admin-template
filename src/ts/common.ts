@@ -1,5 +1,13 @@
 export type ApiRoutes = URL | Request | string;
 
+export type UrlRoutes = URL | string;
+
+export type ExtractState<S> = S extends {
+  getState: () => infer T;
+}
+  ? T
+  : never;
+
 export type Nullable<T> = T | null;
 
 export type NoInfer<T> = [T][T extends any ? 0 : never];

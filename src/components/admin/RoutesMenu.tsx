@@ -1,64 +1,43 @@
-import React from 'react';
-import { Divider, Menu } from 'antd';
-import {
-  AppstoreOutlined,
-  CalendarOutlined,
-  LinkOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
-import type { MenuProps, MenuTheme } from 'antd/es/menu';
+import React, { useCallback } from 'react';
 
-type MenuItem = Required<MenuProps>['items'][number];
+// components
+import { Menu } from 'antd';
 
-function getItem(
-  label: React.ReactNode,
-  key?: React.Key | null,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
+// hooks
+import { useRouteContext } from '~/store/useRouteStore';
+
+import { getUrl } from '~/utils/utils';
+import { Routes } from '~/libs/router/routes';
+
+import type { UrlRoutes } from '~/ts/common';
+
+interface RoutesMenuProps {
+  pageTransition: (url: UrlRoutes) => Promise<void>;
 }
 
-const items: MenuItem[] = [
-  getItem('Navigation One', '1', <MailOutlined />),
-  getItem('Navigation Two', '2', <CalendarOutlined />),
-  getItem('Navigation Two', 'sub1', <AppstoreOutlined />, [
-    getItem('Option 3', '3'),
-    getItem('Option 4', '4'),
-    getItem('Submenu', 'sub1-2', null, [
-      getItem('Option 5', '5'),
-      getItem('Option 6', '6'),
-    ]),
-  ]),
-  getItem('Navigation Three', 'sub2', <SettingOutlined />, [
-    getItem('Option 7', '7'),
-    getItem('Option 8', '8'),
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-  ]),
-  getItem(
-    <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-      Ant Design
-    </a>,
-    'link',
-    <LinkOutlined />,
-  ),
-];
+function RoutesMenu({ pageTransition }: RoutesMenuProps) {
+  const { menuRoutes, openRoutes, selectedRoute } = useRouteContext(
+    (state) => state,
+  );
 
-function RoutesMenu() {
+  const onSelect = useCallback(
+    (data: Record<string, any>) => {
+      const pathname = Routes.getMoveToRoute(data.selectedKeys);
+      if (!pathname) return;
+      const nextUrl = new URL(pathname, getUrl().origin);
+      pageTransition(nextUrl);
+    },
+    [pageTransition],
+  );
+
   return (
     <Menu
       className="routes-menu"
-      defaultSelectedKeys={['1']}
-      defaultOpenKeys={['sub1']}
       mode={'inline'}
-      items={items}
+      defaultOpenKeys={openRoutes}
+      defaultSelectedKeys={selectedRoute}
+      items={menuRoutes}
+      onSelect={onSelect}
     />
   );
 }

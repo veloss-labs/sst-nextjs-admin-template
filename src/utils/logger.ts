@@ -98,7 +98,7 @@ class Logger {
    * @param error The error that occurred
    * @param extra Arbitrary data to be logged that will appear in prod logs
    */
-  error(message: string, error: Error, extra?: Extra) {
+  error(message: string, error: Error | unknown, extra?: Extra) {
     console.error(message, {
       error,
       extra,
