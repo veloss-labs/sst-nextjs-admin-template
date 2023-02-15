@@ -3,7 +3,7 @@ import { Breadcrumb } from 'antd';
 import AdminLayout from '~/components/admin/AdminLayout';
 
 export default function Home() {
-  return <>Home</>;
+  return <div className="mt-4">Home</div>;
 }
 
 Home.getLayout = function GetLayout(page: React.ReactNode) {
