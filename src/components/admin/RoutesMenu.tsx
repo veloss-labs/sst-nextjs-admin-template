@@ -38,6 +38,7 @@ function RoutesMenu({ pageTransition }: RoutesMenuProps) {
       defaultSelectedKeys={selectedRoute}
       items={menuRoutes}
       onSelect={onSelect}
+      onDeselect={onSelect}
     />
   );
 }

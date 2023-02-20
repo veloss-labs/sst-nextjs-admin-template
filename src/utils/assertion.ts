@@ -108,11 +108,10 @@ export function compact<T>(array: T[]): T[] {
 export const isNullOrUndefined = (value: unknown): value is null | undefined =>
   value == null;
 
-export const isInvalidDate = (date?: Date | null) => {
-  if (!date) return true;
-  return isNaN(date.getTime());
-};
-
 export function isThenable(thing?: PromiseLike<any>): boolean {
   return !!(thing && !!thing.then);
+}
+
+export function isInvalidDate(date: Date) {
+  return date.toString() === 'Invalid Date';
 }

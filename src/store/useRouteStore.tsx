@@ -8,16 +8,20 @@ import type { NextRouter } from 'next/router';
 import type { AuthoritiesSchema, RouteItem } from '~/libs/router/ts/route';
 
 interface RouteSchema {
+  isRouteLoading: boolean;
   originRoutes: AuthoritiesSchema[];
   menuRoutes: RouteItem[];
   selectedRoute?: string[];
   openRoutes?: string[];
 }
 
-export interface RouteStore extends RouteSchema {}
+export interface RouteStore extends RouteSchema {
+  transitionRoute: (isLoading: boolean) => void;
+}
 
 const getDefaultInitialState = () =>
   ({
+    isRouteLoading: false,
     originRoutes: [],
     menuRoutes: [],
     openRoutes: [],
@@ -35,12 +39,14 @@ const createRouteStore = (
     menuRoutes,
     nextRouter,
   );
-  return createStore<RouteStore>()(() => ({
+
+  return createStore<RouteStore>()((set) => ({
     ...getDefaultInitialState(),
     ...initProps,
     menuRoutes,
     selectedRoute,
     openRoutes,
+    transitionRoute: (isLoading) => set({ isRouteLoading: isLoading }),
   }));
 };
 

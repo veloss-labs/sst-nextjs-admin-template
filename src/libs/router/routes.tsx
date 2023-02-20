@@ -54,12 +54,29 @@ class InternalRoutes {
   > = new Map();
 
   private _matchPathName(path: string) {
-    const page = Object.values(_PAGES).find((page) => page.path === path);
+    if (path === _PAGES.DASHBOARD.path) {
+      return _PAGES.DASHBOARD.name;
+    }
+
+    const page = Object.values(_PAGES)
+      .filter((page) => page.path !== _PAGES.DASHBOARD.path)
+      .find((page) => {
+        const regex = new RegExp(page.path);
+        return regex.test(path);
+      });
+
     return page?.name;
   }
 
   private _matchPageName(name: string) {
-    const page = Object.values(_PAGES).find((page) => page.name === name);
+    if (name === _PAGES.DASHBOARD.name) {
+      return _PAGES.DASHBOARD.path;
+    }
+
+    const page = Object.values(_PAGES).find((page) => {
+      return name.includes(page.name);
+    });
+
     return page?.path;
   }
 
@@ -181,6 +198,7 @@ class InternalRoutes {
     if (nextRouter) {
       const { pathname } = nextRouter;
       const name = this._matchPathName(pathname);
+
       if (!name) {
         return {
           selectedRoute: [defaultKey] as string[],
@@ -190,6 +208,13 @@ class InternalRoutes {
 
       const selectedRoute: string[] = [];
       const openRoutes: string[] = [];
+      for (const routeValue of this._ownerTableMap.values()) {
+        if (routeValue.name === name) {
+          const key = hash(routeValue);
+          selectedRoute.push(key);
+        }
+      }
+
       for (const routeValue of this._childrenTableMap.values()) {
         if (routeValue.name === name) {
           const { ownerKey, ...others } = routeValue;
@@ -198,6 +223,7 @@ class InternalRoutes {
           openRoutes.push(ownerKey);
         }
       }
+
       return {
         selectedRoute,
         openRoutes,

@@ -138,18 +138,11 @@ export const useParams = <S extends UrlState = UseUrlParamsState>(
   return params;
 };
 
-export const useSetUrlState = <S extends UrlState = UrlState>(
-  options?: Options,
-) => {
-  const [_, setState] = useUrlState<S>(undefined, options);
-  return setState;
-};
-
 export const useResetUrlState = () => {
   const router = useRouter();
+
   return useCallback(() => {
-    router.replace({
-      search: '',
-    });
+    const url = new URL(location.pathname, location.origin);
+    router.replace(url, undefined, { shallow: true });
   }, [router]);
 };

@@ -14,6 +14,7 @@ import { useMedia } from 'react-use';
 import { useLayoutContext } from '~/store/useLayoutStore';
 import { useLoading } from '~/libs/hooks/useLoading';
 import { useRouter } from 'next/router';
+import { useRouteContext } from '~/store/useRouteStore';
 
 // types
 import type { UrlRoutes } from '~/ts/common';
@@ -27,6 +28,8 @@ function AdminLayout({ children, pageHeader }: AdminLayoutProps) {
   const router = useRouter();
 
   const { token } = theme.useToken();
+
+  const isRouteLoading = useRouteContext((state) => state.isRouteLoading);
 
   const [isLoading, startTransition] = useLoading();
 
@@ -120,7 +123,7 @@ function AdminLayout({ children, pageHeader }: AdminLayoutProps) {
           ) : null}
         </div>
       </div>
-      {isLoading ? (
+      {isLoading || isRouteLoading ? (
         <Deferred>
           <Spin spinning className="page-loading" />
         </Deferred>
