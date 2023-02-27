@@ -1,23 +1,12 @@
 import React from 'react';
-import { Breadcrumb, Button } from 'antd';
-import AdminLayout from '~/components/admin/AdminLayout';
+import { Breadcrumb } from 'antd';
 import { useRouter } from 'next/router';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import AdminLayout from '~/components/admin/AdminLayout';
+import ManagerEditForm from '~/components/manager/ManagerEditForm';
 
 export default function EditPage() {
   const router = useRouter();
-  return (
-    <div>
-      <Button
-        htmlType="button"
-        type="text"
-        size="small"
-        icon={<ArrowLeftOutlined />}
-      >
-        Back
-      </Button>
-    </div>
-  );
+  return <ManagerEditForm />;
 }
 
 EditPage.getLayout = function GetLayout(page: React.ReactNode) {

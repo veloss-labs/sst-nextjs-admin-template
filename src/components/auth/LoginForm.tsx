@@ -6,7 +6,7 @@ import { Input, Button, Form } from 'antd';
 // form
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, type LoginFormData } from '~/libs/form/auth';
+import { schema, type LoginFormData } from '~/libs/validation/auth';
 
 export default function LoginForm() {
   const {
@@ -14,7 +14,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(schema.login),
   });
 
   const control_email = useController({

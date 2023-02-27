@@ -1,3 +1,4 @@
+import type { FormInstance } from 'antd';
 import { isElement } from '~/utils/assertion';
 
 export function canUseDOM(): boolean {
@@ -22,7 +23,7 @@ export function getOwnerDocument(node?: Element | null): Document {
 
 type TargetValue<T> = T | undefined | null;
 
-type TargetType = HTMLElement | Element | Window | Document;
+type TargetType = HTMLElement | Element | Window | Document | FormInstance;
 
 export type BasicTarget<T extends TargetType = Element> =
   | (() => TargetValue<T>)

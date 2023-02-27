@@ -46,3 +46,16 @@
 }
 
 /* Sidebar */
+
+
+/* Card */
+
+.edit-form .ant-card-actions {
+  @apply !flex !justify-end !bg-gray-100 gap-4;
+}
+
+.edit-form .ant-card-actions li {
+  width: auto !important;
+}
+
+/*  */

@@ -6,7 +6,7 @@ import { Input, Button, Form } from 'antd';
 // form
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signupSchema, type SignupFormData } from '~/libs/form/auth';
+import { schema, type SignupFormData } from '~/libs/validation/auth';
 
 export default function SignupForm() {
   const {
@@ -14,7 +14,7 @@ export default function SignupForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignupFormData>({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(schema.signup),
   });
 
   const control_email = useController({
